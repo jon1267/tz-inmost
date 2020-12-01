@@ -83,11 +83,16 @@
                                     <select multiple id="category" name="category[]" size="3"
                                             class="form-control @error('category') is-invalid @enderror" >
                                         @foreach($categories as $category)
-                                            <option value="{{ $category->id }}">{{ $category->title }}</option>
+                                            {{--<option value="{{ $category->id }}">{{ $category->title }}</option>--}}
+                                            <option value="{{ $category->id }}"
+                                            @if(isset($product) && in_array($category->id, $product->categories()->where('product_id', $product->id)->pluck('category_id')->toArray()))  selected  @endif>
+                                                {{ $category->title }}
+                                            </option>
                                         @endforeach
                                     </select>
+                                    {{-- dd($product->categories()->where('product_id', $product->id)->pluck('category_id')) --}}
                                     @error('category')
-                                    <span class="invalid-feedback" style="display: inline-block" role="alert">
+                                        <span class="invalid-feedback" style="display: inline-block" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
