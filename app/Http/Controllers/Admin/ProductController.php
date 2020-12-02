@@ -90,7 +90,7 @@ class ProductController extends Controller
     public function update(StoreProductRequest $request, Product $product)
     {
         $data = $request->except('_token', '_method' ,'category');
-        $data['img'] = $this->img->getImg($request);
+        $data['img'] = $this->img->updateImg($request, $product);
         $categories = $request->category;
 
         $product->update($data);
